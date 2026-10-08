@@ -41,3 +41,7 @@ example
 # generated native folders
 /ios
 /android
+
+# editor and agent settings
+.vscode/
+.claude/
