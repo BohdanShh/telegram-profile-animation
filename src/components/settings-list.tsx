@@ -37,16 +37,6 @@ const GROUPS: SettingsRowData[][] = [
   ],
   [
     {
-      title: "Wallet",
-      iconColor: "#1e88f5",
-      symbol: {
-        ios: "wallet.bifold.fill",
-        android: "account_balance_wallet",
-      },
-    },
-  ],
-  [
-    {
       title: "Saved Messages",
       iconColor: "#1e88f5",
       symbol: { ios: "bookmark.fill", android: "bookmark" },

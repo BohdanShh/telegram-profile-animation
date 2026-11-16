@@ -18,6 +18,11 @@ export default function Index() {
             <Stack.Toolbar.Button icon="qrcode" onPress={() => {}} />
           </Stack.Toolbar>
           <Stack.Toolbar placement="right">
+            <Stack.Toolbar.Button
+              icon="magnifyingglass"
+              separateBackground
+              onPress={() => {}}
+            />
             <Stack.Toolbar.Button onPress={() => {}}>Edit</Stack.Toolbar.Button>
           </Stack.Toolbar>
         </>
@@ -40,19 +45,34 @@ export default function Index() {
               </Pressable>
             ),
             headerRight: () => (
-              <Pressable
-                onPress={() => {}}
-                accessibilityRole="button"
-                accessibilityLabel="Edit"
-                hitSlop={8}
-                style={{ padding: 8 }}
-              >
-                <SymbolView
-                  name={{ ios: "pencil", android: "edit" }}
-                  size={24}
-                  tintColor={colors.onHeader}
-                />
-              </Pressable>
+              <View style={styles.headerButtons}>
+                <Pressable
+                  onPress={() => {}}
+                  accessibilityRole="button"
+                  accessibilityLabel="Search"
+                  hitSlop={8}
+                  style={{ padding: 8 }}
+                >
+                  <SymbolView
+                    name={{ ios: "magnifyingglass", android: "search" }}
+                    size={24}
+                    tintColor={colors.onHeader}
+                  />
+                </Pressable>
+                <Pressable
+                  onPress={() => {}}
+                  accessibilityRole="button"
+                  accessibilityLabel="Edit"
+                  hitSlop={8}
+                  style={{ padding: 8 }}
+                >
+                  <SymbolView
+                    name={{ ios: "pencil", android: "edit" }}
+                    size={24}
+                    tintColor={colors.onHeader}
+                  />
+                </Pressable>
+              </View>
             ),
           }}
         />
@@ -69,5 +89,8 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     backgroundColor: colors.groupedBackground,
+  },
+  headerButtons: {
+    flexDirection: "row",
   },
 });
