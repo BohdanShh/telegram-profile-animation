@@ -99,13 +99,17 @@ export function ProfileHeader({ scrollY }: Props) {
     transform: [{ scaleY: visibleHeight.value / expandedHeight }],
   }));
 
-  const nameStyle = useAnimatedStyle(() => ({
+  // Apart from the transform, so the text color is only re-sent while the gradient fades, not on every scroll frame.
+  const nameColorStyle = useAnimatedStyle(() => ({
     // White on the gradient, dark by the time the gradient is gone and the page shows through.
     color: interpolateColor(
       backgroundOpacity.value,
       [0, 1],
       [colors.label, colors.onHeader],
     ),
+  }));
+
+  const nameStyle = useAnimatedStyle(() => ({
     transform: [
       { translateY: nameOffset.value + NAME_LOCK_DRIFT * nameCollapse.value },
       { scale: 1 + (NAME_MIN_SCALE - 1) * nameCollapse.value },
@@ -138,6 +142,7 @@ export function ProfileHeader({ scrollY }: Props) {
           progress={progress}
           motion={avatarMotion}
           width={width}
+          height={expandedHeight}
         />
 
         <Avatar
@@ -153,6 +158,7 @@ export function ProfileHeader({ scrollY }: Props) {
           style={[
             styles.name,
             { top: top + NAME_CENTER - NAME_LINE_HEIGHT / 2 },
+            nameColorStyle,
             nameStyle,
           ]}
         >

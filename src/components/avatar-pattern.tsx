@@ -1,8 +1,12 @@
-import { SymbolView, type SymbolViewProps } from "expo-symbols";
-import { StyleSheet, View } from "react-native";
-import Animated, {
+import {
+  Canvas,
+  Picture,
+  Skia,
+  createPicture,
+} from "@shopify/react-native-skia";
+import {
   Easing,
-  useAnimatedStyle,
+  useDerivedValue,
   type SharedValue,
 } from "react-native-reanimated";
 
@@ -15,6 +19,7 @@ const PER_RING = 6;
 const FIRST_RING = AVATAR_RADIUS + 22;
 const RING_GAP = 28;
 const STEP = (2 * Math.PI) / PER_RING;
+
 const SIZE = 26;
 const MIN_SCALE = 0.7;
 
@@ -27,10 +32,16 @@ const WAVE_WIDTH = 0.8;
 const END_DISTANCE = 20;
 const WAVE_EASING = Easing.bezierFn(0.6, 0, 0.4, 1);
 
+const STAR_COLOR = Skia.Color(colors.headerPattern);
+
+// How close the sides bend toward the center; lower is sharper.
+const STAR_PINCH = 0.12;
+
 type Star = {
   distance: number;
-  angle: number;
-  size: number;
+  cos: number;
+  sin: number;
+  radius: number;
   opacity: number;
   /** 0 by the avatar, 1 at the far rings. */
   reach: number;
@@ -45,88 +56,83 @@ function random(seed: number) {
 const STARS: Star[] = Array.from({ length: RINGS * PER_RING }, (_, index) => {
   const ring = Math.floor(index / PER_RING);
   const distance = FIRST_RING + ring * RING_GAP;
+
   const turn = ring % 2 === 1 ? STEP / 2 : 0;
+  const angle = -Math.PI / 2 + (index % PER_RING) * STEP + turn;
+
   const scale = MIN_SCALE + random(index + 1) * (1 - MIN_SCALE);
+
   return {
     distance,
-    angle: -Math.PI / 2 + (index % PER_RING) * STEP + turn,
-    size: Math.floor(SIZE * scale),
+    cos: Math.cos(angle),
+    sin: Math.sin(angle),
+    radius: Math.floor(SIZE * scale) / 2,
     opacity: MAX_OPACITY * Math.max(1 - distance / FADE_DISTANCE, 0),
     reach: Math.min(distance / (2 * FIRST_RING), 1),
   };
 });
 
-const STAR_SYMBOL: SymbolViewProps["name"] = {
-  ios: "star.fill",
-  android: "star",
-};
+/** A four-point sparkle with curved-in sides, centered on the origin, radius 1. */
+const STAR_PATH = Skia.PathBuilder.Make()
+  .moveTo(0, -1)
+  .quadTo(STAR_PINCH, -STAR_PINCH, 1, 0)
+  .quadTo(STAR_PINCH, STAR_PINCH, 0, 1)
+  .quadTo(-STAR_PINCH, STAR_PINCH, -1, 0)
+  .quadTo(-STAR_PINCH, -STAR_PINCH, 0, -1)
+  .close()
+  .detach();
 
 type Props = {
   progress: SharedValue<number>;
   motion: AvatarMotion;
   width: number;
+  height: number;
 };
 
-export function AvatarPattern({ progress, motion, width }: Props) {
-  return (
-    <View pointerEvents="none" style={StyleSheet.absoluteFill}>
-      {STARS.map((star, index) => (
-        <PatternStar
-          key={index}
-          star={star}
-          progress={progress}
-          discY={motion.discY}
-          centerX={width / 2}
-        />
-      ))}
-    </View>
-  );
-}
-
-type StarProps = {
-  star: Star;
-  progress: SharedValue<number>;
-  discY: SharedValue<number>;
-  centerX: number;
-};
-
-function PatternStar({
-  star: { distance, angle, size, opacity, reach },
+// All stars go into one picture per frame: a native view per star costs a layer each on Android.
+export function AvatarPattern({
   progress,
-  discY,
-  centerX,
-}: StarProps) {
-  const style = useAnimatedStyle(() => {
+  motion: { discY },
+  width,
+  height,
+}: Props) {
+  const centerX = width / 2;
+
+  const picture = useDerivedValue(() => {
     const wave = Math.min(progress.value / WAVE_END, 1);
     const back = -WAVE_WIDTH + wave * (1 + WAVE_WIDTH);
-    const behind = Math.min(Math.max(reach - back, 0), WAVE_WIDTH) / WAVE_WIDTH;
-    const pulled = 1 - WAVE_EASING(behind);
-    const radius = distance + (END_DISTANCE - distance) * pulled;
-    return {
-      opacity: opacity * (1 - pulled),
-      transform: [
-        { translateX: centerX + radius * Math.cos(angle) - size / 2 },
-        { translateY: discY.value + radius * Math.sin(angle) - size / 2 },
-      ],
-    };
+    const centerY = discY.value;
+
+    return createPicture((canvas) => {
+      const paint = Skia.Paint();
+      paint.setColor(STAR_COLOR);
+
+      for (const { distance, cos, sin, radius, opacity, reach } of STARS) {
+        const behind =
+          Math.min(Math.max(reach - back, 0), WAVE_WIDTH) / WAVE_WIDTH;
+        const pulled = 1 - WAVE_EASING(behind);
+
+        const alpha = opacity * (1 - pulled);
+        if (alpha <= 0) continue;
+
+        const offset = distance + (END_DISTANCE - distance) * pulled;
+        paint.setAlphaf(alpha);
+
+        canvas.save();
+        canvas.translate(centerX + offset * cos, centerY + offset * sin);
+        canvas.scale(radius, radius);
+        canvas.drawPath(STAR_PATH, paint);
+        canvas.restore();
+      }
+    });
   });
 
-  const box = { width: size, height: size };
-
   return (
-    <Animated.View style={[styles.star, box, style]}>
-      <SymbolView
-        name={STAR_SYMBOL}
-        size={size}
-        tintColor={colors.headerPattern}
-        style={box}
-      />
-    </Animated.View>
+    <Canvas
+      pointerEvents="none"
+      style={{ position: "absolute", top: 0, left: 0, width, height }}
+    >
+      <Picture picture={picture} />
+    </Canvas>
   );
 }
-
-const styles = StyleSheet.create({
-  star: {
-    position: "absolute",
-  },
-});
