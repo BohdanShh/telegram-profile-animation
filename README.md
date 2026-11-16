@@ -34,8 +34,8 @@ Expo SDK 58 · Expo Router · React Native Skia · Reanimated · expo-symbols
 
 The avatar mask and the animation curves come from [Telegram iOS](https://github.com/TelegramMessenger/Telegram-iOS), which is licensed under GPL v2:
 
-- `assets/lottie/avatar-mask-island.json` is `UserAvatarMask.tgs` from the Telegram iOS repository, unzipped (`.tgs` is gzipped Lottie JSON), with its layers renamed.
-- `assets/lottie/avatar-mask-top-edge.json` is the same file with the `Line` layer's in-point moved from frame 0 to 75, so the line only appears once it's lifted off screen.
+- `assets/lottie/avatar-mask-island.json` is `UserAvatarMask.tgs` from the Telegram iOS repository, unzipped (`.tgs` is gzipped Lottie JSON), with its layers renamed and the ends of the `Line` layer's line pulled in (≈99pt → 90pt) so they fit under smaller Dynamic Islands (iPhone 18 Pro); the avatar shape is unchanged.
+- `assets/lottie/avatar-mask-top-edge.json` is the original `UserAvatarMask.tgs` (line not narrowed) with the `Line` layer's in-point moved from frame 0 to 75, so the line only appears once it's lifted off screen.
 
 ## License
 

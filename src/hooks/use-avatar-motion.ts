@@ -21,6 +21,8 @@ const MASK_AVATAR_CENTER_Y = 234;
 
 const LINE_CLEARANCE = 1;
 
+const ISLAND_MASK_TOP = 47.5;
+
 const DISC_MIN_SCALE = 0.55;
 const DISC_DRIFT = NAME_LOCK_DRIFT + 10;
 
@@ -43,8 +45,11 @@ export function useAvatarMotion(
   collapseDistance: number,
 ): AvatarMotion {
   const plain = mode === "plain";
-  const restY = top + AVATAR_CENTER;
-  const maskTop = restY - MASK_AVATAR_CENTER_Y * MASK_SCALE;
+  const maskTop =
+    mode === "island"
+      ? ISLAND_MASK_TOP
+      : top + AVATAR_CENTER - MASK_AVATAR_CENTER_Y * MASK_SCALE;
+  const restY = maskTop + MASK_AVATAR_CENTER_Y * MASK_SCALE;
   // Without an island nothing hides the line, so it's lifted off screen before the mask plays.
   const maxLift =
     mode === "topEdge" ? Math.max(maskTop + LINE_CLEARANCE, 0) : 0;
