@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-A single-screen recreation of Telegram's profile header (Expo SDK 57): on scroll the avatar "merges" into the Dynamic Island on iOS, or drips out through the top of the screen on Android. Many numeric constants in the motion code are measured from Telegram iOS (see Credits in `README.md`), not arbitrary tuning.
+A single-screen recreation of Telegram's profile header (Expo SDK 58): on scroll the avatar "merges" into the Dynamic Island on iOS, or drips out through the top of the screen on Android. Many numeric constants in the motion code are measured from Telegram iOS (see Credits in `README.md`), not arbitrary tuning.
 
 ## Commands
 

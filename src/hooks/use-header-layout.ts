@@ -37,7 +37,7 @@ export function useHeaderLayout() {
   const hasIsland =
     isIOS &&
     (Device.isDevice
-      ? ISLAND_MODEL_IDS.has(Device.modelId)
+      ? Device.modelId !== null && ISLAND_MODEL_IDS.has(Device.modelId)
       : topInset >= ISLAND_MIN_TOP_INSET);
 
   let avatarMode: AvatarMode = "topEdge";

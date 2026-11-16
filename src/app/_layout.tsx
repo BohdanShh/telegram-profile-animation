@@ -1,5 +1,4 @@
 import { Stack } from "expo-router";
-import { Platform } from "react-native";
 
 export default function RootLayout() {
   return (
@@ -14,7 +13,6 @@ export default function RootLayout() {
           left: "automatic",
           right: "automatic",
         },
-        statusBarStyle: Platform.select({ android: "light", default: "auto" }),
         title: "",
       }}
     />

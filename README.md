@@ -28,7 +28,7 @@ yarn start
 
 ## Stack
 
-Expo SDK 57 · Expo Router · React Native Skia · Reanimated · expo-symbols
+Expo SDK 58 · Expo Router · React Native Skia · Reanimated · expo-symbols
 
 ## Credits
 

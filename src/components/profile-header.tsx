@@ -1,3 +1,4 @@
+import { StatusBar } from "expo-status-bar";
 import { Platform, StyleSheet, useWindowDimensions } from "react-native";
 import Animated, {
   interpolateColor,
@@ -8,6 +9,7 @@ import Animated, {
   withTiming,
   type SharedValue,
 } from "react-native-reanimated";
+import { scheduleOnRN } from "react-native-worklets";
 
 import { Avatar } from "@/components/avatar";
 import { AvatarPattern } from "@/components/avatar-pattern";
@@ -26,6 +28,9 @@ const GRADIENT_FADE_DURATION = 250;
 const AVATAR = require("../../assets/images/avatar.png");
 
 const GRADIENT = `radial-gradient(circle at 50% 45%, ${colors.headerGradient.join(", ")})`;
+
+// Captured directly by the worklet: a property read on `StatusBar` there would be undefined.
+const setStatusBarStyle = StatusBar.setStyle;
 
 const NAME_CENTER = 146;
 const SUBTITLE_CENTER = 173;
@@ -65,6 +70,7 @@ export function ProfileHeader({ scrollY }: Props) {
         backgroundOpacity.value = withTiming(faded ? 0 : 1, {
           duration: GRADIENT_FADE_DURATION,
         });
+        scheduleOnRN(setStatusBarStyle, faded ? "dark" : "light", true);
       }
     },
   );
