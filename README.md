@@ -2,9 +2,9 @@
 
 A recreation of Telegram's profile header in React Native: as you scroll, the avatar merges into the Dynamic Island on iOS and slides out through the top of the screen on Android.
 
-<p align="center">
-  <img src=".github/demo.gif" alt="Demo on iOS and Android" width="420">
-</p>
+<div align="center">
+  <video src="https://github.com/user-attachments/assets/dfab8b70-f579-46e3-8aca-81d6754b3223" width="420" controls></video>
+</div>
 
 ## Project structure
 
@@ -36,6 +36,12 @@ The avatar mask and the animation curves come from [Telegram iOS](https://github
 
 - `assets/lottie/avatar-mask-island.json` is `UserAvatarMask.tgs` from the Telegram iOS repository, unzipped (`.tgs` is gzipped Lottie JSON), with its layers renamed.
 - `assets/lottie/avatar-mask-top-edge.json` is the same file with the `Line` layer's in-point moved from frame 0 to 75, so the line only appears once it's lifted off screen.
+
+## License
+
+Copyright (C) 2026 Bohdan Shemyhon
+
+Licensed under the [GNU General Public License v2.0](LICENSE). Since the avatar masks come from Telegram iOS (GPL v2), the project is distributed under the same license.
 
 ---
 
