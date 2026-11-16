@@ -1038,13 +1038,6 @@
   resolved "https://registry.yarnpkg.com/@expo/sudo-prompt/-/sudo-prompt-9.3.2.tgz#0fd2813402a42988e49145cab220e25bea74b308"
   integrity sha512-HHQigo3rQWKMDzYDLkubN5WQOYXJJE2eNqIQC2axC2iO3mHdwnIR7FgZVvHWtBwAdzBgAP0ECp8KqS8TiMKvgw==
 
-"@expo/ui@~58.0.28":
-  version "58.0.28"
-  resolved "https://registry.yarnpkg.com/@expo/ui/-/ui-58.0.28.tgz#2439a7bf85321d3b2cede9230cd68c4776ca2c66"
-  integrity sha512-WEe4lOdislcL16H4wAGJRQ3JtzTj4cIFwX+5ZBaTt7QbpxnVwi5acaic9PcEJHjU6pV4ySr6yzH7oywOo7HvrQ==
-  dependencies:
-    sf-symbols-typescript "^2.1.0"
-
 "@expo/ws-tunnel@^2.0.1":
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@expo/ws-tunnel/-/ws-tunnel-2.0.1.tgz#d5eb8ecd186c89a13714e048e3f9bd2c0ae7538b"
@@ -2890,7 +2883,7 @@ expo-font@~58.0.12:
   resolved "https://registry.yarnpkg.com/expo-font/-/expo-font-58.0.12.tgz#5ff24feba8c7d32626e034bd93b5b58aa3c34433"
   integrity sha512-5m8TJrQ27DT1815P066HBtcHINgD8yuIqH4ca2ZyYwCsPa4QZ8UzOBDtrHnAMWMAlAgol+PGVj9aKeoYov70JA==
 
-expo-glass-effect@^58.0.5, expo-glass-effect@~58.0.5:
+expo-glass-effect@^58.0.5:
   version "58.0.5"
   resolved "https://registry.yarnpkg.com/expo-glass-effect/-/expo-glass-effect-58.0.5.tgz#dfc73c5c2b580dfb2656194184cced9d7b044228"
   integrity sha512-PkL1X/r0cTs6NG47Xp3TxRvtqSeRmPYhPOHp3GDmZB2oOxpjXge6qLi/bSSv0asFWqf+MLOlXZ+hq2Imuh0Z1g==
@@ -4805,13 +4798,6 @@ react-devtools-core@^6.1.5:
     shell-quote "^1.6.1"
     ws "^7"
 
-react-dom@19.3.0:
-  version "19.3.0"
-  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-19.3.0.tgz#a0ff19161d7f4e9be5469a07278b0c06e00f9001"
-  integrity sha512-JDk8dgif51OjFoDE70+OT9ICyYr+69HlmihNwp1+Nsfbna3t5sIiCa9ZJktDmQ4/1b/rn26hIAR2uYXDMr5r0Q==
-  dependencies:
-    scheduler "^0.28.0"
-
 react-fast-compare@^3.2.2:
   version "3.2.3"
   resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-3.2.3.tgz#a75b55fe54463ed5b8733d91289da7a6c897b2dc"
@@ -5129,7 +5115,7 @@ sax@>=0.6.0:
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.6.1.tgz#4c23cf608c0b693ab54b4b5888e92cfe977b9843"
   integrity sha512-42tBVwLWnaQvW5zc4HbZrTuWccECCZfBi92FDuwtqxasH+JbPB3/FOKb1m222K42R4WxuxzzMsTswfzgtSu64Q==
 
-scheduler@0.28.0, scheduler@^0.28.0:
+scheduler@0.28.0:
   version "0.28.0"
   resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.28.0.tgz#03d3ca348aeaf8b7502f64468f217b27523f9695"
   integrity sha512-juorfCmIkIw8tT+p5BXSm6PJjQF/ycEYmKyzURCIt/RaZIhL+PulbQ9Yu2z1HdOJDdqDTlxA1+xKBmHXJsczAw==
